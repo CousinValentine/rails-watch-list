@@ -1,0 +1,37 @@
+<div class="container">
+  <div class="row mt-3" data-controller="price-count"  data-price-count-price-value="<%= @grapevine.parcel_price%>">
+     <div class="col-6" >
+        <%= simple_form_for [@grapevine, @booking],
+          html: {
+              data: {
+              controller: 'flatpickr'
+              }
+          } do |f| %>
+        <%= f.input :years, collection: (1..@grapevine.rental_period), label: "Nombre d'année maximum pendant laquelle une parcelle est louée",
+         input_html: {
+           data: {
+            flatpickr_target: 'yearsInput',
+            price_count_target: 'yearsInput',
+            action: 'change->price-count#updatePrice'
+            }
+          } %>
+        <div data-target="price-count" data-action="">
+        <%= f.input :parcel_quantity, collection: 1..@grapevine.parcel_stock , prompt: "Combien de part souhaitez vous louer ?",
+         input_html: {
+          data: {
+            flatpickr_target: 'parcelQuantityInput',
+            price_count_target: 'parcelQuantityInput',
+            action: 'change->price-count#updatePrice'
+          }
+        } %>
+         <%= f.submit "Je loue !", class: "btn-bordeaux" %>
+
+        <% end %>
+        </div>
+      </div>
+      <div class="col-6 ml-5 p-3 card-trip">
+          <%= image_tag @grapevine.photo %>
+            <h2 style="color:black" class="p-3">Prix total: <span data-price-count-target="priceHolder"><%= @grapevine.parcel_price %></span> €</h2>
+      </div>
+  </div>
+</div>

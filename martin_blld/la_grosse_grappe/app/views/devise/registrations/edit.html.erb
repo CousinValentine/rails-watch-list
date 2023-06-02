@@ -1,0 +1,50 @@
+<div class="banner" style="background-image: linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4)),url(<%= asset_path('photo-banner-home.jpg')%>);">
+  <div class="p-3">
+    <div class=container>
+
+      <h1>Modifier mon profil</h1>
+
+        <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+          <%= f.error_notification %>
+
+          <div class="form-inputs">
+            <%= f.input :first_name, label: "Prénom :", required:true, autofocus: true, label_html: { class: "white-text" } %>
+            <%= f.input :last_name, label: "Nom de famille :", required:true, autofocus: true, label_html: { class: "white-text" } %>
+            <%= f.input :email, required: true, autofocus: true, label_html: { class: "white-text" } %>
+            <%= f.input :phone_number, label: "Numéro de téléphone :",required:true, autofocus: true, label_html: { class: "white-text" } %>
+            <%= f.input :photo, as: :file, required:false, autofocus: true, label: "Choisir Photo", label_html: { class: "white-text" } %>
+
+            <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+              <p>En attente de confirmation pour : <%= resource.unconfirmed_email %></p>
+            <% end %>
+
+            <%= f.input :current_password,
+                        hint: content_tag(:span, "Entrez votre mot de passe actuel pour valider vos modifications.", class: "white-text"),
+                        required: false,
+                        label_html: { class: "white-text" },
+                        label: "Mot de passe actuel :" %>
+            <%= f.input :password,
+                        hint: content_tag(:span, "Ne rien renseigner si vous ne voulez pas faire de modification.",class: "white-text"),
+                        required: false,
+                        label_html: { class: "white-text" },
+                        label: "Nouveau mot de passe :" %>
+            <%= f.input :password_confirmation,
+                        required: false,
+                        label_html: { class: "white-text" },
+                        label: "Confirmer mot de passe :" %>
+          </div>
+
+          <div class="">
+            <%= f.button :submit, "Mettre à jour", class: "btn-bordeaux" %>
+            <%# , class: "btn-bordeaux" %>
+          </div>
+        <% end %>
+        <br>
+        <h6><%= link_to "Annuler mes changements", dashboard_path, class: "btn-bordeaux" %></h6>
+        <br>
+        <div><%= button_to "Supprimer mon compte", registration_path(resource_name), data: { confirm: "Confirmer", turbo_confirm: "Confirmer" }, method: :delete, class: "btn-bordeaux" %></div>
+        <br>
+        <%= link_to "< Retour",  :back, class: "white-text-hoover" %>
+    </div>
+  </div>
+</div>
